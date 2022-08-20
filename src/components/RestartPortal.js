@@ -32,7 +32,13 @@ const Wrapper = styled.div`
 
 
 const Container = styled.div`
-    padding: 20px 25px;
+    padding: 20px 35px;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     background: white;
     border-radius: 5px;
 
@@ -47,9 +53,10 @@ const Title = styled.h1`
 
 
 const Flex = styled.div`
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 `
 const Button = styled.button`
