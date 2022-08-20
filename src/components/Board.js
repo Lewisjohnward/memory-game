@@ -53,7 +53,6 @@ export const Board = ({
 }) => {
     const icons = gridSize * gridSize
     const test = "goodbye"
-    const test1= "hello again"
 
 
     return (
