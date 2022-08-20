@@ -4,6 +4,7 @@ import {createGlobalStyle} from "styled-components"
 export const GlobalStyle = createGlobalStyle`
     html{
         font-size: 16px;
+        user-select: none;
     }
     *{
         margin: 0;

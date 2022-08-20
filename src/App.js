@@ -29,11 +29,6 @@ const StyledApp = styled.div`
     width: 100vw;
     height: ${({height}) => height}px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-
     //@media (min-width: 1px) {
     //    background: #FFDC00;
     //}
