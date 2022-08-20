@@ -76,10 +76,15 @@ const Player = styled.div`
 
 
 const Padding = styled.div`
-    padding: 30px 20px;
+    padding: 10px 20px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 
-    @media (max-width: 450px){
-        padding: 30px 5px;
+
+    @media (min-width: 450px){
+        margin: 0px 200px;
     }
 `
 

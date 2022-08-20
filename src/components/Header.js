@@ -6,7 +6,6 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
 `
 
 const OptionContainer = styled.div`
@@ -14,12 +13,13 @@ const OptionContainer = styled.div`
 
 const Title = styled.h1`
     color: ${({theme}) => theme.navy};
-    font-size: 1em;
+    font-size: 2rem;
 `
 const Button = styled.button`
     background: ${({theme}) => theme.silver};
     color: ${({theme}) => theme.navy};
-    padding: 0.6em 2.1em;
+    padding: 0.6em 1.1em;
+    font-size: 1rem;
     font-weight: bold;
     border-radius: 2em;
 

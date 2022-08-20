@@ -3,19 +3,12 @@ import styled from "styled-components"
 import {v4 as uuidv4} from "uuid"
 
 
-const Wrapper = styled.div`
-    height: 100%;
-    width: 100%;
-    padding: 25px;
-`
-
 
 const GridWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-bottom: 100px;
 `
 const GridContainer = styled.div`
     display: grid;
@@ -29,16 +22,17 @@ const PlayerContainer = styled.div`
     display: flex;
     justify-content: space-around;
 `
+
 const PlayerDiv = styled.div`
     background: ${({theme}) => theme.navy};
     text-align: center;
-    padding: 10px 50px;
+    padding: 10px 20px;
     border-radius: 3px;
     color: white;
 `
 
 
-const iconSize = 70
+const iconSize = 60
 
 export const Board = ({
     theme,
@@ -81,10 +75,6 @@ export const Board = ({
     }
     return (
         <>
-            {theme}:
-            {players}:
-            {gridSize}:
-            {guessCount}
             <GridWrapper>
                 <GridContainer gridSize={gridSize} width={width}>
                     {gridArr.map(d => <Icon key={d.key} found={d.found} number={d.num} guessCount={guessCount} setGuessCount={setGuessCount}/>)}
@@ -99,16 +89,20 @@ const Player = () => {
     return (
         <PlayerContainer>
             <PlayerDiv>
-                Hello
+                <div>P1</div>
+                <div>0</div>
             </PlayerDiv>
             <PlayerDiv>
-                Hello
+                <div>P2</div>
+                <div>0</div>
             </PlayerDiv>
             <PlayerDiv>
-                Hello
+                <div>P3</div>
+                <div>0</div>
             </PlayerDiv>
             <PlayerDiv>
-                Hello
+                <div>P4</div>
+                <div>0</div>
             </PlayerDiv>
         </PlayerContainer>
     )
