@@ -52,7 +52,7 @@ export const Board = ({
     setConfirmRestart
 }) => {
     const icons = gridSize * gridSize
-    const test = "hello"
+    const test = "goodbye"
 
 
     return (
