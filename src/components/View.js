@@ -1,6 +1,7 @@
 import {useState} from "react"
 import styled from "styled-components"
 import {Setup} from "./Setup"
+import {RestartPortal} from "./RestartPortal"
 import {Board} from "./Board"
 
 
@@ -84,6 +85,8 @@ export const View = () => {
     const [players, setPlayers] = useState(2)
     const [gridSize, setGridSize] = useState(4)
 
+    const [confirmRestart, setConfirmRestart] = useState(false)
+
 
 
 
@@ -113,6 +116,7 @@ export const View = () => {
                 theme={theme}
                 players={players}
                 gridSize={gridSize}
+                setConfirmRestart={setConfirmRestart}
             />
             if(initGame) return setup
             else return board
@@ -120,6 +124,11 @@ export const View = () => {
 
     return (
         <>
+            <RestartPortal 
+                confirmRestart={confirmRestart}
+                setConfirmRestart={setConfirmRestart}
+                setInitGame={setInitGame}
+            />
             { viewSelector() }
         </>
     )

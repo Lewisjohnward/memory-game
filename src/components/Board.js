@@ -1,5 +1,6 @@
 import styled from "styled-components"
 
+
 const Wrapper = styled.div`
     height: 100%;
     width: 100%;
@@ -47,18 +48,22 @@ export const Board = ({
     theme,
     players,
     gridSize,
-    setInitGame
+    setInitGame,
+    setConfirmRestart
 }) => {
+
+
     return (
         <Wrapper>
             <Container>
                 <Title>memory</Title>
                 <OptionContainer>
-                    <RestartButton>Restart</RestartButton>
+                    <RestartButton onClick={() => setConfirmRestart(true)}>Restart</RestartButton>
                     <Button onClick={() => setInitGame(true)}>New Game</Button>
                 </OptionContainer>
             </Container>
             <GridContainer>
+
             </GridContainer>
         </Wrapper>
     )
