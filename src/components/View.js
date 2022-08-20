@@ -75,6 +75,13 @@ const Player = styled.div`
 `
 
 
+const Padding = styled.div`
+    padding: 30px 20px;
+
+    @media (max-width: 450px){
+        padding: 30px 5px;
+    }
+`
 
 export const View = () => {
     const [viewSettings, setViewSettings] = useState(false)
@@ -110,7 +117,7 @@ export const View = () => {
                 setGridSize={setGridSize}
             />
         const main = 
-            <>
+            <Padding>
                 <Header 
                     setInitGame={setInitGame}
                 />
@@ -120,7 +127,7 @@ export const View = () => {
                     players={players}
                     gridSize={gridSize}
             />
-            </>
+            </Padding>
             if(initGame) return setup
             else return main
     }
