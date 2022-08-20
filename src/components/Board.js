@@ -1,4 +1,6 @@
+import {useState, useEffect} from "react"
 import styled from "styled-components"
+import {v4 as uuidv4} from "uuid"
 
 
 const Wrapper = styled.div`
@@ -31,20 +33,47 @@ export const Board = ({
     setInitGame,
     setConfirmRestart
 }) => {
+    const [gridArr, setGridArr] = useState([])
+
+
+    const [guessCount, setGuessCount] = useState(0)
+
     const tiles = gridSize * gridSize
-    const arr = new Array(tiles).fill(0).map(d => <Icon />)
+    const uniqueNums = tiles / 2
+
+    const min = 1
+    const max = 99
+    const randomNum = () => Math.floor(Math.random() * (max - min + 1) + min)
+
+    const arr = new Array(tiles).fill(0).map(d => {
+        return (
+            {
+                key: uuidv4(),
+                num: randomNum(),
+                found: false
+            }
+        )
+    })
+
     const width = gridSize * iconSize
+    useEffect(() => {
+        setGridArr(arr)
+    }, [])
 
+    useEffect(() => {
+    }, [])
 
-
+    const compare = () => {
+    }
     return (
         <>
             {theme}:
             {players}:
-            {gridSize}
+            {gridSize}:
+            {guessCount}
             <GridWrapper>
                 <GridContainer gridSize={gridSize} width={width}>
-                {arr}
+                    {gridArr.map(d => <Icon key={d.key} found={d.found} number={d.num} guessCount={guessCount} setGuessCount={setGuessCount}/>)}
                 </GridContainer>
             </GridWrapper>
         </>
@@ -54,7 +83,7 @@ export const Board = ({
 const IconStyled = styled.div`
     height: ${iconSize}px;
     width: ${iconSize}px;
-    background: ${({theme}) => theme.navy};
+    background: ${({theme, guess, found}) => found ? theme.orange : guess ? theme.silver : theme.navy};
     border-radius: 50px;
     font-weight: bold;
     font-size: 1.6rem;
@@ -69,11 +98,10 @@ const IconStyled = styled.div`
         cursor: pointer;
     }
 `
-const Icon = () => {
-    const max = 100
-    const min = 1
-    const random = Math.floor(Math.random() * (max - min + 1) + min) 
+const Icon = ({number, found, guessCount, setGuessCount}) => {
+    const [guess, setGuess] = useState(false)
+
     return (
-        <IconStyled onClick={() => alert(random)}>{random}</IconStyled>
+        <IconStyled found={found} guess={guess} onClick={() => setGuess(true)}>{number}</IconStyled>   
     )
 }
