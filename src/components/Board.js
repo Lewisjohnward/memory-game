@@ -15,6 +15,7 @@ const GridWrapper = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-bottom: 100px;
 `
 const GridContainer = styled.div`
     display: grid;
@@ -23,6 +24,19 @@ const GridContainer = styled.div`
     grid-template-columns: ${({gridSize}) => `repeat(${gridSize}, 1fr)`};
     justify-items: center;
 `
+
+const PlayerContainer = styled.div`
+    display: flex;
+    justify-content: space-around;
+`
+const PlayerDiv = styled.div`
+    background: ${({theme}) => theme.navy};
+    text-align: center;
+    padding: 10px 50px;
+    border-radius: 3px;
+    color: white;
+`
+
 
 const iconSize = 70
 
@@ -76,7 +90,27 @@ export const Board = ({
                     {gridArr.map(d => <Icon key={d.key} found={d.found} number={d.num} guessCount={guessCount} setGuessCount={setGuessCount}/>)}
                 </GridContainer>
             </GridWrapper>
+            <Player />
         </>
+    )
+}
+
+const Player = () => {
+    return (
+        <PlayerContainer>
+            <PlayerDiv>
+                Hello
+            </PlayerDiv>
+            <PlayerDiv>
+                Hello
+            </PlayerDiv>
+            <PlayerDiv>
+                Hello
+            </PlayerDiv>
+            <PlayerDiv>
+                Hello
+            </PlayerDiv>
+        </PlayerContainer>
     )
 }
 
