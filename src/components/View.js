@@ -1,8 +1,8 @@
 import {useState} from "react"
 import styled from "styled-components"
 import {Setup} from "./Setup"
-import {RestartPortal} from "./RestartPortal"
 import {Board} from "./Board"
+import {Header} from "./Header"
 
 
 const Wrapper = styled.div`
@@ -85,7 +85,6 @@ export const View = () => {
     const [players, setPlayers] = useState(2)
     const [gridSize, setGridSize] = useState(4)
 
-    const [confirmRestart, setConfirmRestart] = useState(false)
 
 
 
@@ -110,102 +109,25 @@ export const View = () => {
                 gridSize={gridSize}
                 setGridSize={setGridSize}
             />
-        const board = 
-            <Board
-                setInitGame={setInitGame}
-                theme={theme}
-                players={players}
-                gridSize={gridSize}
-                setConfirmRestart={setConfirmRestart}
+        const main = 
+            <>
+                <Header 
+                    setInitGame={setInitGame}
+                />
+                <Board
+                    setInitGame={setInitGame}
+                    theme={theme}
+                    players={players}
+                    gridSize={gridSize}
             />
+            </>
             if(initGame) return setup
-            else return board
+            else return main
     }
 
     return (
         <>
-            <RestartPortal 
-                confirmRestart={confirmRestart}
-                setConfirmRestart={setConfirmRestart}
-                setInitGame={setInitGame}
-            />
-            { viewSelector() }
+            {viewSelector()}
         </>
-    )
-
-    return (
-        <Wrapper>
-            <Button onClick={() => setInitGame(true)}>
-                reset
-            </Button>
-            {
-                initGame ?
-                    <>
-                        <Title>Game setup</Title>
-                        <OptionContainer>
-                            <Text>
-                                Select Theme
-                            </Text>
-                            {theme}
-                            <SelectButton selected={theme == "numbers"} onClick={() => setTheme("numbers")}>
-                                Numbers
-                            </SelectButton>
-                            <SelectButton selected={theme == "icons"} onClick={() => setTheme("icons")}>
-                                Icons
-                            </SelectButton>
-                        </OptionContainer>
-                        <OptionContainer>
-                            {players}
-                            <Text>
-                                Number of players
-                            </Text>
-                            <SelectButton selected={players == 1} onClick={() => setPlayers(1)}>
-                                1
-                            </SelectButton>
-                            <SelectButton selected={players == 2} onClick={() => setPlayers(2)}>
-                                2
-                            </SelectButton>
-                            <SelectButton selected={players == 3} onClick={() => setPlayers(3)}>
-                                3
-                            </SelectButton>
-                            <SelectButton selected={players == 4} onClick={() => setPlayers(4)}>
-                                4
-                            </SelectButton>
-                        </OptionContainer>
-                        <OptionContainer>
-                            <Text>
-                                Grid Size
-                            </Text>
-                            <SelectButton selected={gridSize == 4} onClick={() => setGridSize(4)}>
-                                4x4
-                            </SelectButton>
-                            <SelectButton selected={gridSize == 6} onClick={() => setGridSize(6)}>
-                                6x6
-                            </SelectButton>
-                        </OptionContainer>
-                        <Button onClick={() => setInitGame(false)}>
-                            Start game
-                        </Button>
-                    </>
-                    :
-                    viewSettings ?
-                        <Container>
-                        </Container>
-                        :
-                        <>
-                            <Container>
-                                <Title>Memory</Title>
-                                <Button onClick={() => setViewSettings(true)}>Menu</Button>
-                                <Button onClick={() => toggleNumber()}>Number</Button>
-                            </Container>
-                            <GridContainer>
-                                {arr.map(d => <Grid />)}
-                            </GridContainer>
-                            <PlayerContainer>
-                            </PlayerContainer>
-
-                        </>
-            }
-        </Wrapper>
     )
 }

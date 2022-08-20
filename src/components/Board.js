@@ -7,42 +7,22 @@ const Wrapper = styled.div`
     padding: 25px;
 `
 
-const Container = styled.div`
+
+const GridWrapper = styled.div`
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 25px;
-`
-
-const OptionContainer = styled.div`
-`
-
-const Title = styled.h1`
-    color: ${({theme}) => theme.navy};
-    font-size: 1em;
-`
-const Button = styled.button`
-    background: ${({theme}) => theme.silver};
-    color: ${({theme}) => theme.navy};
-    padding: 0.6em 2.1em;
-    font-weight: bold;
-    border-radius: 2em;
-
-    &:hover{
-        cursor: pointer;
-    }
-
-    margin: 5px;
-`
-const RestartButton = styled(Button)`
-    background: ${({theme}) => theme.orange};
-    color: white;
 `
 const GridContainer = styled.div`
     display: grid;
-    background: red;
+    grid-gap: 4px;
+    margin: auto;
+    grid-template-columns: ${({gridSize}) => `repeat(${gridSize}, 1fr)`};
+    justify-items: center;
 `
 
+const iconSize = 70
 
 export const Board = ({
     theme,
@@ -51,22 +31,49 @@ export const Board = ({
     setInitGame,
     setConfirmRestart
 }) => {
-    const icons = gridSize * gridSize
+    const tiles = gridSize * gridSize
+    const arr = new Array(tiles).fill(0).map(d => <Icon />)
+    const width = gridSize * iconSize
+
 
 
     return (
-        <Wrapper>
-            <Container>
-                <Title>memory</Title>
-                <OptionContainer>
-                    <RestartButton onClick={() => setConfirmRestart(true)}>Restart</RestartButton>
-                    <Button onClick={() => setInitGame(true)}>New Game</Button>
-                </OptionContainer>
-            </Container>
-            <GridContainer>
-
-            </GridContainer>
-        </Wrapper>
+        <>
+            {theme}:
+            {players}:
+            {gridSize}
+            <GridWrapper>
+                <GridContainer gridSize={gridSize} width={width}>
+                {arr}
+                </GridContainer>
+            </GridWrapper>
+        </>
     )
 }
 
+const IconStyled = styled.div`
+    height: ${iconSize}px;
+    width: ${iconSize}px;
+    background: ${({theme}) => theme.navy};
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.6rem;
+    color: white;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    &:hover{
+        cursor: pointer;
+    }
+`
+const Icon = () => {
+    const max = 100
+    const min = 1
+    const random = Math.floor(Math.random() * (max - min + 1) + min) 
+    return (
+        <IconStyled onClick={() => alert(random)}>{random}</IconStyled>
+    )
+}
