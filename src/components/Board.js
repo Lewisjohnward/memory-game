@@ -51,6 +51,7 @@ export const Board = ({
     setInitGame,
     setConfirmRestart
 }) => {
+    const icons = gridSize * gridSize
 
 
     return (
