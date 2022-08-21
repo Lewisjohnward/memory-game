@@ -51,7 +51,6 @@ export const Board = ({
     setConfirmRestart
 }) => {
     const [gridArr, setGridArr] = useState([])
-    const [count, setCount] = useState(0)
 
     const [guess, setGuess] = useState([])
 
@@ -79,26 +78,43 @@ export const Board = ({
         setGridArr(arr)
     }, [])
 
-    const handleGuess = (id) => {
-        setGuess(prev => [...prev, id])
-    }
-    useEffect(() => {
-        if(guess.length == 2) {
-            console.log("resetting guess")
-            setGuess([])
-        }    
-        if(guess.length  != 0) {
-            console.log("this is dog")
-            const gridItem = gridArr.filter(d => d.key == guess[guess.length - 1])
-            gridArr[gridItem[0].position].visible = true
-            const newArr = [...gridArr]
-            setGridArr(newArr)
+    const handleGuess = (id, number) => {
+        const guessObj = {
+            id,
+            number
         }
-    }, [guess, count])
-
-
-    const compare = () => {
+        setGuess(prev => [...prev, guessObj])
     }
+
+    const compareGuesses = () => {
+        if(guess[0].number === guess[1].number)
+        {
+            console.log("guesses right!")
+            setGuess([])
+        }
+        else hideGuesses()
+
+
+    }
+
+    const hideGuesses = () => {
+        console.log("guesses wrong!")
+        const temp = gridArr.map(d => ({position: d.position, key: d.key, num: d.num, visible: false, found: d.found}))
+        setGridArr([...temp])
+        setGuess([])
+    }
+
+    useEffect(() => {
+        if(guess.length == 0) return
+        else if(guess.length == 2) compareGuesses()
+        else {
+            const gridItem = gridArr.filter(d => d.key == guess[guess.length - 1].id)
+            gridArr[gridItem[0].position].visible = true
+            setGridArr([...gridArr])
+        }
+    }, [guess])
+
+
     return (
         <>
             <GridContainer gridSize={gridSize} width={width}>
@@ -151,6 +167,9 @@ const IconStyled = styled.div`
     justify-content: center;
     align-items: center;
 
+    //transition: all 1.2s;
+
+
     &:hover{
         cursor: pointer;
     }
@@ -159,10 +178,11 @@ const Icon = ({id, number, visible, found, handleGuess}) => {
 
     return (
         <IconStyled 
-            onClick={() => handleGuess(id)}
+            onClick={() => handleGuess(id, number)}
             visible={visible}
         >
             {number}
+            {visible ? "true" : "false"}
         </IconStyled>   
     )
 }
