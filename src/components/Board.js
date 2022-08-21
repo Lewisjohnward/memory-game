@@ -51,9 +51,9 @@ export const Board = ({
     setConfirmRestart
 }) => {
     const [gridArr, setGridArr] = useState([])
+    const [count, setCount] = useState(0)
 
-
-    const [guessCount, setGuessCount] = useState(0)
+    const [guess, setGuess] = useState([])
 
     const tiles = gridSize * gridSize
     const uniqueNums = tiles / 2
@@ -62,11 +62,13 @@ export const Board = ({
     const max = 99
     const randomNum = () => Math.floor(Math.random() * (max - min + 1) + min)
 
-    const arr = new Array(tiles).fill(0).map(d => {
+    const arr = new Array(tiles).fill(0).map((d, i) => {
         return (
             {
+                position: i,
                 key: uuidv4(),
                 num: randomNum(),
+                visible: false,
                 found: false
             }
         )
@@ -77,15 +79,38 @@ export const Board = ({
         setGridArr(arr)
     }, [])
 
+    const handleGuess = (id) => {
+        setGuess(prev => [...prev, id])
+    }
     useEffect(() => {
-    }, [])
+        if(guess.length == 2) {
+            console.log("resetting guess")
+            setGuess([])
+        }    
+        if(guess.length  != 0) {
+            console.log("this is dog")
+            const gridItem = gridArr.filter(d => d.key == guess[guess.length - 1])
+            gridArr[gridItem[0].position].visible = true
+            const newArr = [...gridArr]
+            setGridArr(newArr)
+        }
+    }, [guess, count])
+
 
     const compare = () => {
     }
     return (
         <>
             <GridContainer gridSize={gridSize} width={width}>
-                {gridArr.map(d => <Icon key={d.key} found={d.found} number={d.num} guessCount={guessCount} setGuessCount={setGuessCount}/>)}
+                {gridArr.map(d => ( 
+                    <Icon 
+                        key={d.key} 
+                        id={d.key}
+                        found={d.found} 
+                        number={d.num} 
+                        handleGuess={handleGuess}
+                        visible={d.visible}
+                    /> ))}
             </GridContainer>
             <Player />
         </>
@@ -116,13 +141,13 @@ const Player = () => {
 }
 
 const IconStyled = styled.div`
-    background: ${({theme, guess, found}) => found ? theme.orange : guess ? theme.silver : theme.navy};
+    background: ${({theme}) => theme.navy};
     font-size: 1.6rem;
-    color: white;
+    color: ${({visible}) => visible ? "white" : "transparent"};
     border-radius: 50px;
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
@@ -130,10 +155,14 @@ const IconStyled = styled.div`
         cursor: pointer;
     }
 `
-const Icon = ({number, found, guessCount, setGuessCount}) => {
-    const [guess, setGuess] = useState(false)
+const Icon = ({id, number, visible, found, handleGuess}) => {
 
     return (
-        <IconStyled found={found} guess={guess} onClick={() => setGuess(true)}>{number}</IconStyled>   
+        <IconStyled 
+            onClick={() => handleGuess(id)}
+            visible={visible}
+        >
+            {number}
+        </IconStyled>   
     )
 }
