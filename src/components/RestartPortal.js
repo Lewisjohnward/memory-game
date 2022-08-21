@@ -33,7 +33,6 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
     padding: 20px 35px;
-    height: 30%;
     display: flex;
     flex-direction: column;
     justify-content: center;

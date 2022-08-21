@@ -74,18 +74,16 @@ const Player = styled.div`
     width: 10px;
 `
 
-
 const Padding = styled.div`
-    padding: 10px 20px 30px;
+    padding: 10px 5px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 100%;
 
-
-    @media (min-width: 450px){
-        margin: 0px 200px;
+    @media (min-width: 650px){
+        padding: 10px 100px;
     }
+
 `
 
 export const View = () => {

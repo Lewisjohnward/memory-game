@@ -4,31 +4,40 @@ import {v4 as uuidv4} from "uuid"
 
 
 
-const GridWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-`
 const GridContainer = styled.div`
     display: grid;
     grid-gap: 4px;
     margin: auto;
     grid-template-columns: ${({gridSize}) => `repeat(${gridSize}, 1fr)`};
-    justify-items: center;
+    width: 340px;
+    height: 340px;
+
+    @media (min-width: 450px){
+        width: 400px;
+        height: 400px;
+    }
 `
 
 const PlayerContainer = styled.div`
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 `
 
 const PlayerDiv = styled.div`
     background: ${({theme}) => theme.navy};
     text-align: center;
-    padding: 10px 20px;
+    padding: 20px 30px;
     border-radius: 3px;
     color: white;
+    margin: 0px 10px;
+
+    @media (min-width: 450px){
+        margin: 0px 30px;
+    }
+
+    @media (min-width: 650px){
+        margin: 0px 50px;
+    }
 `
 
 
@@ -75,11 +84,9 @@ export const Board = ({
     }
     return (
         <>
-            <GridWrapper>
-                <GridContainer gridSize={gridSize} width={width}>
-                    {gridArr.map(d => <Icon key={d.key} found={d.found} number={d.num} guessCount={guessCount} setGuessCount={setGuessCount}/>)}
-                </GridContainer>
-            </GridWrapper>
+            <GridContainer gridSize={gridSize} width={width}>
+                {gridArr.map(d => <Icon key={d.key} found={d.found} number={d.num} guessCount={guessCount} setGuessCount={setGuessCount}/>)}
+            </GridContainer>
             <Player />
         </>
     )
@@ -109,13 +116,10 @@ const Player = () => {
 }
 
 const IconStyled = styled.div`
-    height: ${iconSize}px;
-    width: ${iconSize}px;
     background: ${({theme, guess, found}) => found ? theme.orange : guess ? theme.silver : theme.navy};
-    border-radius: 50px;
-    font-weight: bold;
     font-size: 1.6rem;
     color: white;
+    border-radius: 50px;
 
     display: flex;
     flex-direction: row;
