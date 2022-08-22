@@ -9,9 +9,17 @@ Welcome 👋! This is my solution to the [Memory Game challenge on Frontend Ment
   - [Built with](#built-with)
 - [Author](#author)
 
+### 
+
 ## Overview
 
 ### Screenshot
+
+###TODO
+- [ ] Prevent clicking during uncover animation
+- [ ] End game logic
+- [ ] Implement scoring
+- [ ] Implement variable number of players
 
 
 ## My process

@@ -60,13 +60,17 @@ export const Board = ({
     const min = 1
     const max = 99
     const randomNum = () => Math.floor(Math.random() * (max - min + 1) + min)
+    const numArr = new Array(tiles / 2).fill(0).map(d => randomNum())
 
+    let randomNumPos = 0
     const arr = new Array(tiles).fill(0).map((d, i) => {
+        if(randomNumPos > (numArr.length - 1)) randomNumPos = 0
+        randomNumPos++
         return (
             {
                 position: i,
                 key: uuidv4(),
-                num: randomNum(),
+                num: numArr[randomNumPos - 1],
                 visible: false,
                 found: false
             }
@@ -89,18 +93,34 @@ export const Board = ({
     const compareGuesses = () => {
         if(guess[0].number === guess[1].number)
         {
-            const gridItem = gridArr.filter(d => d.key == guess[0].id)
+            const gridItem = gridArr.filter(d => {
+                if (d.key == guess[0].id) return d
+                else if (d.key == guess[1].id) return d
+            })
             gridArr[gridItem[0].position].found = true
+            gridArr[gridItem[1].position].found = true
             setGridArr([...gridArr])
         }
-        else hideGuesses()
+        else setTimeout(() => hideGuesses(), 700)
 
         setGuess([])
 
     }
 
     const hideGuesses = () => {
-        const temp = gridArr.map(d => ({position: d.position, key: d.key, num: d.num, visible: false, found: d.found}))
+        const temp = gridArr.map(d => {
+            if(!d.found) {
+                return({
+                        position: d.position,
+                        key: d.key,
+                        num: d.num,
+                        visible: false,
+                        found: d.found
+                    })
+            }
+                else return d
+        }
+        )
         setGridArr([...temp])
     }
 
@@ -115,7 +135,7 @@ export const Board = ({
     useEffect(() => {
         if(guess.length == 0) return
 
-        if(guess.length == 2) setTimeout(() => compareGuesses(), 700)
+        if(guess.length == 2) compareGuesses()
         toggleVisible()
     }, [guess])
 
