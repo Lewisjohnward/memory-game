@@ -89,27 +89,34 @@ export const Board = ({
     const compareGuesses = () => {
         if(guess[0].number === guess[1].number)
         {
-            setGuess([])
+            const gridItem = gridArr.filter(d => d.key == guess[0].id)
+            gridArr[gridItem[0].position].found = true
+            setGridArr([...gridArr])
         }
         else hideGuesses()
 
+        setGuess([])
 
     }
 
     const hideGuesses = () => {
         const temp = gridArr.map(d => ({position: d.position, key: d.key, num: d.num, visible: false, found: d.found}))
         setGridArr([...temp])
-        setGuess([])
     }
+
+
+    const toggleVisible = () => {
+        const gridItem = gridArr.filter(d => d.key == guess[guess.length - 1].id)
+        gridArr[gridItem[0].position].visible = true
+        setGridArr([...gridArr])
+    }
+
 
     useEffect(() => {
         if(guess.length == 0) return
-        else if(guess.length == 2) compareGuesses()
-        else {
-            const gridItem = gridArr.filter(d => d.key == guess[guess.length - 1].id)
-            gridArr[gridItem[0].position].visible = true
-            setGridArr([...gridArr])
-        }
+
+        if(guess.length == 2) setTimeout(() => compareGuesses(), 700)
+        toggleVisible()
     }, [guess])
 
 
@@ -155,7 +162,7 @@ const Player = () => {
 }
 
 const IconStyled = styled.div`
-    background: ${({theme}) => theme.navy};
+    background: ${({theme, found}) => found ? theme.orange : theme.navy};
     font-size: 1.6rem;
     color: ${({visible}) => visible ? "white" : "transparent"};
     border-radius: 50px;
@@ -165,7 +172,7 @@ const IconStyled = styled.div`
     justify-content: center;
     align-items: center;
 
-    //transition: all 1.2s;
+    transition: all 1s;
 
 
     &:hover{
@@ -176,6 +183,7 @@ const Icon = ({id, number, visible, found, handleGuess}) => {
 
     return (
         <IconStyled 
+            found={found}
             onClick={() => handleGuess(id, number)}
             visible={visible}
         >
