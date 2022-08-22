@@ -21,6 +21,9 @@ Welcome 👋! This is my solution to the [Memory Game challenge on Frontend Ment
 - [ ] End game logic
 - [ ] Implement scoring
 - [ ] Implement variable number of players
+- [ ] Icon mode
+- [ ] HOC portal
+- [ ] Newgame confirm
 
 
 ## My process
