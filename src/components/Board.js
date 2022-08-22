@@ -89,7 +89,6 @@ export const Board = ({
     const compareGuesses = () => {
         if(guess[0].number === guess[1].number)
         {
-            console.log("guesses right!")
             setGuess([])
         }
         else hideGuesses()
@@ -98,7 +97,6 @@ export const Board = ({
     }
 
     const hideGuesses = () => {
-        console.log("guesses wrong!")
         const temp = gridArr.map(d => ({position: d.position, key: d.key, num: d.num, visible: false, found: d.found}))
         setGridArr([...temp])
         setGuess([])
@@ -182,7 +180,6 @@ const Icon = ({id, number, visible, found, handleGuess}) => {
             visible={visible}
         >
             {number}
-            {visible ? "true" : "false"}
         </IconStyled>   
     )
 }
