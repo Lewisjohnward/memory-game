@@ -16,6 +16,7 @@ Welcome 👋! This is my solution to the [Memory Game challenge on Frontend Ment
 ### Screenshot
 
 ###TODO
+- [ ] Prevent clicking on tile more than once
 - [ ] Prevent clicking during uncover animation
 - [ ] End game logic
 - [ ] Implement scoring
