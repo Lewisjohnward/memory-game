@@ -161,7 +161,7 @@ export const Board = ({
                         key={d.key} 
                         id={d.key}
                         found={d.found} 
-                        number={d.num} 
+                        number={d.num}
                         handleGuess={handleGuess}
                         visible={d.visible}
                     /> ))}
