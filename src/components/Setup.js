@@ -5,8 +5,9 @@ const Wrapper = styled.div`
     width: 100%;
     background: ${({theme}) => theme.navy};
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    padding-top: 60px;
 `
 
 const Container = styled.div`
@@ -48,8 +49,9 @@ const StartButton = styled(Button)`
 `
 
 const Title = styled.h1`
-    color: ${({theme}) => theme.navy};
-    font-size: 1em;
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 70px;
 `
 
 const OptionContainer = styled.div`
@@ -76,6 +78,7 @@ export const Setup = ({
 ) => {
     return (
         <Wrapper>
+            <Title>Memory</Title>
             <Container>
                 <OptionContainer>
                 <Text>
