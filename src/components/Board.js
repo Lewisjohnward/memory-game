@@ -23,8 +23,6 @@ const GridContainer = styled.div`
     }
 `
 
-
-
 const iconSize = 60
 
 export const Board = ({
@@ -233,27 +231,64 @@ const PlayerContainer = styled.div`
 `
 
 const PlayerDiv = styled.div`
+    position: relative;
     background: ${({theme, currentPlayer}) => currentPlayer ? theme.orange : theme.lightgray};
-    padding: 20px 30px;
-    border-radius: 5px;
-    color: ${({theme}) => theme.navy};
+    border-radius: 2px;
+    color: ${({theme, currentPlayer}) => currentPlayer ? "white" : theme.navy};
+    padding: 10px 0px;
     margin: 0px 10px;
 
+
     @media (min-width: 450px){
-        margin: 0px 30px;
+        padding: 20px;
     }
 
     @media (min-width: 650px){
         margin: 0px 50px;
+        width: 200px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 30px;
     }
 `
 const Bold = styled.div`
     font-size: 1rem;
 `
-const Centered = styled.div`
+const Score = styled.div`
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.5rem;
 `
 
+const PointerDiv = styled(PlayerContainer)`
+    position: absolute;
+    background: inherit;
+    z-index: -1;
+    transform: rotate(45deg);
+    height: 20px;
+    width: 20px;
+
+    top: 0px;
+    left: 50%;
+
+    transform: translate(-50%, -50%) rotate(45deg);
+`
+
+
+
+
 const Player = ({playersState, currentPlayer, time, moveCount}) => {
+    const [mobile, setMobile] = useState(false)
+
+    useEffect(() => {
+        window.innerWidth < 451 && setMobile(true)
+    }, [])
+
+    useEffect(() => {
+        console.log(mobile)
+    }, [mobile])
+
     if(!playersState) return
 
     return (
@@ -262,23 +297,26 @@ const Player = ({playersState, currentPlayer, time, moveCount}) => {
                 playersState.length == 1 ? 
                     <Soloplayer playersState={playersState} currentPlayer={currentPlayer}  time={time} moveCount={moveCount}/>
                     :
-                    <Multiplayer playersState={playersState} currentPlayer={currentPlayer} />
+                    <Multiplayer mobile={mobile} playersState={playersState} currentPlayer={currentPlayer} />
             }
         </PlayerContainer>
     )
 }
 
-const Multiplayer = ({playersState, currentPlayer}) => {
+const Multiplayer = ({playersState, currentPlayer, mobile}) => {
     return (
         <>
             {playersState.map(d => (
-                <PlayerDiv
-                    key={d.id}
-                    currentPlayer={d.player === currentPlayer}
-                >
-                    <Bold>{d.player}</Bold>
-                    <Centered>{d.score}</Centered>
-                </PlayerDiv>
+                <>
+                    <PlayerDiv
+                        key={d.id}
+                        currentPlayer={d.player === currentPlayer}
+                    >
+                        <PointerDiv />
+                        <Bold>{mobile ? "P" : "Player"} {d.player}</Bold>
+                        <Score>{d.score}</Score>
+                    </PlayerDiv>
+                    </>
             ))}
         </>
     )
@@ -313,7 +351,7 @@ const Soloplayer = ({playersState, currentPlayer, time, moveCount}) => {
             </SoloplayerDiv>
             <SoloplayerDiv >
                 <Bold>Moves</Bold>
-                <Centered>{moveCount}</Centered>
+                <Score>{moveCount}</Score>
             </SoloplayerDiv>
         </>
     )
