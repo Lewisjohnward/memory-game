@@ -1,6 +1,7 @@
 import {useState} from "react"
 import styled from "styled-components"
 import {RestartPortal} from "./RestartPortal"
+import {NewGameButton, RestartButton} from "../styles/Buttons.styled"
 
 const Container = styled.div`
     display: flex;
@@ -14,24 +15,6 @@ const OptionContainer = styled.div`
 const Title = styled.h1`
     color: ${({theme}) => theme.navy};
     font-size: 2rem;
-`
-const Button = styled.button`
-    background: ${({theme}) => theme.silver};
-    color: ${({theme}) => theme.navy};
-    padding: 0.6em 1.1em;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 2em;
-
-    &:hover{
-        cursor: pointer;
-    }
-
-    margin: 5px;
-`
-const RestartButton = styled(Button)`
-    background: ${({theme}) => theme.orange};
-    color: white;
 `
 
 export const Header = ({setInitGame}) => {
@@ -47,7 +30,7 @@ export const Header = ({setInitGame}) => {
                 <Title>memory</Title>
                     <OptionContainer>
                     <RestartButton onClick={() => setConfirmRestart(true)}>Restart</RestartButton>
-                    <Button onClick={() => setInitGame(true)}>New Game</Button>
+                    <NewGameButton onClick={() => setInitGame(true)}>New Game</NewGameButton>
                     </OptionContainer>
         </Container>
         </>

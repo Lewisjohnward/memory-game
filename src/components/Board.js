@@ -1,3 +1,4 @@
+import {NewGameButton, RestartButton} from "../styles/Buttons.styled"
 import {useState, useEffect} from "react"
 import styled from "styled-components"
 import {v4 as uuidv4} from "uuid"
@@ -41,6 +42,10 @@ export const Board = ({
 
     const [endGame, setEndGame] = useState(false)
 
+    const [time, setTime] = useState(0)
+    const [moveCount, setMoveCount] = useState(0)
+    const [enableGuess, setEnableGuess] = useState(true)
+
     const tiles = gridSize * gridSize
     const uniqueNums = tiles / 2
 
@@ -72,6 +77,11 @@ export const Board = ({
     }, [])
 
     const handleGuess = (id, number) => {
+        //Prevents rapid clicking
+        if(enableGuess == false) return
+        //Prevents clicking on guess twice
+        if(id == guess[0]?.id) return
+
         const guessObj = {
             id,
             number
@@ -96,8 +106,8 @@ export const Board = ({
             const newState = playersState
             newState[currentPlayer - 1].score++
             setPlayersState([...newState])
-             
-            
+
+
         }
         else setTimeout(() => hideGuesses(), 700)
 
@@ -109,14 +119,14 @@ export const Board = ({
         const temp = gridArr.map(d => {
             if(!d.found) {
                 return({
-                        position: d.position,
-                        key: d.key,
-                        num: d.num,
-                        visible: false,
-                        found: d.found
-                    })
+                    position: d.position,
+                    key: d.key,
+                    num: d.num,
+                    visible: false,
+                    found: d.found
+                })
             }
-                else return d
+            else return d
         }
         )
         setGridArr([...temp])
@@ -135,10 +145,11 @@ export const Board = ({
     }
 
     const checkEndGame = () => {
-        ///TODO
-
+        gridArr.filter(d => d.found != true).length == 0 && setEndGame(true)
 
     }
+
+    const incrementMoveCount = () => setMoveCount(prev => prev + 1)
 
     useEffect(() => {
         if(guess.length == 0) return
@@ -147,14 +158,32 @@ export const Board = ({
             compareGuesses() 
             changePlayer()
             checkEndGame()
+            incrementMoveCount()
+
+            delayGuess()
+
         }
         toggleVisible()
     }, [guess])
 
+    const delayGuess = () => {
+        toggleGuess()
+        setTimeout(toggleGuess, 1000)
+    }
+    const toggleGuess = () => setEnableGuess(prev => !prev)
+
+
+    const incrementTime = () => setTime(prev => prev + 1)
+
+    useEffect(() => {
+        if(playersState?.length != 1) return
+        setTimeout(incrementTime, 1000)
+    }, [time, playersState])
+
 
     return (
         <>
-            <EndGamePortal endGame={endGame}/>
+            <EndGamePortal setInitGame={setInitGame} endGame={endGame} playersState={playersState}/>
             <GridContainer gridSize={gridSize} width={width}>
                 {gridArr.map(d => ( 
                     <Icon 
@@ -166,21 +195,21 @@ export const Board = ({
                         visible={d.visible}
                     /> ))}
             </GridContainer>
-            <Player playersState={playersState} currentPlayer={currentPlayer} />
+            <Player moveCount={moveCount} time={time} playersState={playersState} currentPlayer={currentPlayer} />
         </>
     )
 }
 
 const PlayerContainer = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 `
 
 const PlayerDiv = styled.div`
-    background: ${({theme, currentPlayer}) => currentPlayer ? theme.orange : theme.navy};
+    background: ${({theme, currentPlayer}) => currentPlayer ? theme.orange : theme.lightgray};
     padding: 20px 30px;
     border-radius: 5px;
-    color: white;
+    color: ${({theme}) => theme.navy};
     margin: 0px 10px;
 
     @media (min-width: 450px){
@@ -195,14 +224,26 @@ const Bold = styled.div`
     font-size: 1rem;
 `
 const Centered = styled.div`
-    text-align: center;
 `
 
-const Player = ({playersState, currentPlayer}) => {
+const Player = ({playersState, currentPlayer, time, moveCount}) => {
     if(!playersState) return
 
     return (
         <PlayerContainer>
+            {
+                playersState.length == 1 ? 
+                    <Soloplayer playersState={playersState} currentPlayer={currentPlayer}  time={time} moveCount={moveCount}/>
+                    :
+                    <Multiplayer playersState={playersState} currentPlayer={currentPlayer} />
+            }
+        </PlayerContainer>
+    )
+}
+
+const Multiplayer = ({playersState, currentPlayer}) => {
+    return (
+        <>
             {playersState.map(d => (
                 <PlayerDiv
                     key={d.id}
@@ -210,10 +251,44 @@ const Player = ({playersState, currentPlayer}) => {
                 >
                     <Bold>{d.player}</Bold>
                     <Centered>{d.score}</Centered>
-                    </PlayerDiv>
-
+                </PlayerDiv>
             ))}
-        </PlayerContainer>
+        </>
+    )
+}
+
+const SoloplayerDiv = styled(PlayerDiv)`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+`
+
+const TimeContainer = styled.div`
+    font-weight: 700;
+    font-size: 1.2rem;
+`
+
+const formatTime = (time) => time < 10 ? "0" + time : time
+
+const renderTime = (time) => {
+    const mins = Math.floor(time / 60)
+    const remaining = formatTime(time - (mins * 60))
+    return `${mins}:${remaining}`
+}
+
+const Soloplayer = ({playersState, currentPlayer, time, moveCount}) => {
+    return (
+        <>
+            <SoloplayerDiv >
+                <Bold>Time</Bold>
+                <TimeContainer>{renderTime(time)}</TimeContainer>
+            </SoloplayerDiv>
+            <SoloplayerDiv >
+                <Bold>Moves</Bold>
+                <Centered>{moveCount}</Centered>
+            </SoloplayerDiv>
+        </>
     )
 }
 
@@ -251,11 +326,10 @@ const Icon = ({id, number, visible, found, handleGuess}) => {
 const modalPlaceholderElement = document.getElementById("modal-placeholder")
 
 
-export const EndGamePortal = ({endGame}) => {
+export const EndGamePortal = ({endGame, playersState, setInitGame}) => {
     if(endGame == false) return null
     return ReactDOM.createPortal(
-        <Component 
-        />
+        <Component playersState={playersState} setInitGame={setInitGame}/>
         , modalPlaceholderElement
     )
 }
@@ -315,19 +389,22 @@ const Button = styled.button`
 
 `
 
-const RestartButton = styled(Button)`
-    background: ${({theme}) => theme.orange};
-    color: white;
-`
 
-const Component = ({}) => {
+
+
+const Component = ({playersState, setInitGame}) => {
+
+    const sorted = [...playersState].sort((a, b) => a.score > b.score) 
+    const winner = sorted[0].player
+
+
     return (
         <Wrapper>
             <Container>
-                <Title>Player X has won!</Title>
+                <Title>Player {winner} has won!</Title>
                 <Flex>
-                    <RestartButton >Restart</RestartButton>
-                    <Button >Cancel</Button>
+                    <RestartButton>Restart</RestartButton>
+                    <NewGameButton onClick={() => setInitGame(true)}>New Game</NewGameButton>
                 </Flex>
             </Container>
         </Wrapper>
