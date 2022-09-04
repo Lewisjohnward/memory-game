@@ -13,7 +13,7 @@ const Padding = styled.div`
     height: 100%;
 
     @media (min-width: 650px){
-        padding: 10px 100px;
+        padding: 10px 400px;
         height: 93%;
     }
 
