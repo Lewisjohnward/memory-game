@@ -11,7 +11,7 @@ import {FaHandPeace} from "react-icons/fa"
 const GridContainer = styled.div`
     display: grid;
     grid-gap: 4px;
-    margin: auto;
+    margin: 0px auto;
     grid-template-columns: ${({gridSize}) => `repeat(${gridSize}, 1fr)`};
     width: 340px;
     height: 340px;

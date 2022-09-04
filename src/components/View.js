@@ -5,83 +5,16 @@ import {Board} from "./Board"
 import {Header} from "./Header"
 
 
-const Wrapper = styled.div`
-    background: white;
-    height: 100%;
-    width: 100%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    > * {
-        margin-bottom: 10px;
-    }
-`
-
-const Container = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`
-
-const Title = styled.h1`
-    color: ${({theme}) => theme.navy};
-    font-size: 1em;
-`
-const Button = styled.button`
-    background: ${({theme}) => theme.orange};
-    color: white;
-    padding: 1em 2em;
-    border-radius: 2em;
-
-    &:hover{
-        cursor: pointer;
-    }
-`
-const SelectButton = styled(Button)`
-    ${({selected}) => selected && "background: black"};
-`
-
-const GridContainer = styled.div`
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    align-items: center;
-    justify-items: center;
-    outline: 1px solid black;
-    height: 80%;
-`
-
-const Grid = styled.div`
-    outline: 1px solid black;
-    height: 80%;
-    width: 80%;
-    background: black;
-    border-radius: 50px;
-`
-
-const Text = styled.p`
-`
-
-const OptionContainer = styled.div`
-`
-const PlayerContainer = styled.div`
-    display: flex;
-`
-const Player = styled.div`
-    background: black;
-    height: 10px;
-    width: 10px;
-`
-
 const Padding = styled.div`
-    padding: 10px 5px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 5px;
     height: 100%;
 
     @media (min-width: 650px){
         padding: 10px 100px;
+        height: 90%;
     }
 
 `
