@@ -235,12 +235,12 @@ const PlayerDiv = styled.div`
     background: ${({theme, currentPlayer}) => currentPlayer ? theme.orange : theme.lightgray};
     border-radius: 2px;
     color: ${({theme, currentPlayer}) => currentPlayer ? "white" : theme.navy};
-    padding: 10px 0px;
+    padding: 10px 20px;
     margin: 0px 10px;
 
 
     @media (min-width: 450px){
-        padding: 20px;
+        padding: 30px;
     }
 
     @media (min-width: 650px){
