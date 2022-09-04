@@ -238,18 +238,12 @@ const PlayerDiv = styled.div`
     padding: 10px 20px;
     margin: 0px 10px;
 
-
-    @media (min-width: 450px){
-        padding: 30px;
-    }
-
     @media (min-width: 650px){
-        margin: 0px 50px;
         width: 200px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px 30px;
+        padding: 10px 20px;
     }
 `
 const Bold = styled.div`
