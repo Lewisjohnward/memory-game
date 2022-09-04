@@ -65,6 +65,7 @@ export const Board = ({
                 key: uuidv4(),
                 num: numArr[randomNumPos - 1].num,
                 icon: numArr[randomNumPos - 1].icon,
+                current: false,
                 visible: false,
                 found: false
             }
@@ -123,6 +124,7 @@ export const Board = ({
                 return({
                     position: d.position,
                     key: d.key,
+                    current: false,
                     num: d.num,
                     icon: d.icon,
                     visible: false,
@@ -139,6 +141,7 @@ export const Board = ({
     const toggleVisible = () => {
         const gridItem = gridArr.filter(d => d.key == guess[guess.length - 1].id)
         gridArr[gridItem[0].position].visible = true
+        gridArr[gridItem[0].position].current = true
         setGridArr([...gridArr])
     }
 
@@ -194,6 +197,7 @@ export const Board = ({
                         icon={d.icon}
                         key={d.key} 
                         id={d.key}
+                        current={d.current}
                         found={d.found} 
                         number={d.num}
                         handleGuess={handleGuess}
@@ -298,8 +302,14 @@ const Soloplayer = ({playersState, currentPlayer, time, moveCount}) => {
 }
 
 const IconStyled = styled.div`
-    background: ${({theme, found}) => found ? theme.orange : theme.navy};
-    font-size: 1.6rem;
+    background: ${({theme, found, current}) => {
+        if(found) return theme.silver
+        else if(current) return theme.orange
+        else return theme.navy
+    }};
+
+    font-size: 1.8rem;
+    font-weight: bold;
     color: ${({visible}) => visible ? "white" : "transparent"};
     border-radius: 50px;
 
@@ -322,11 +332,12 @@ const StyledIcon = styled.div`
     
 
 `
-const Icon = ({id, number, visible, found, handleGuess, icon, iconView}) => {
+const Icon = ({id, number, visible, found, handleGuess, icon, iconView, current}) => {
 
     return (
         <IconStyled 
             found={found}
+            current={current}
             onClick={() => handleGuess(id, number)}
             visible={visible}
         >
