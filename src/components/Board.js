@@ -52,7 +52,8 @@ export const Board = ({
     const min = 1
     const max = 99
     const randomNum = () => Math.floor(Math.random() * (max - min + 1) + min)
-    const numArr = new Array(tiles / 2).fill(0).map(d => randomNum())
+    const iconArr = [<BiAnchor />, <FaHandPeace />, <IoMdCash />, <IoMdPaw />, <IoMdTrophy />, <IoMdRocket />, <IoMdGift />, <IoIosHappy />]
+    const numArr = new Array(tiles / 2).fill(0).map((d, i) => ({num: randomNum(), icon: iconArr[i]}))
 
     let randomNumPos = 0
     const arr = new Array(tiles).fill(0).map((d, i) => {
@@ -62,7 +63,8 @@ export const Board = ({
             {
                 position: i,
                 key: uuidv4(),
-                num: numArr[randomNumPos - 1],
+                num: numArr[randomNumPos - 1].num,
+                icon: numArr[randomNumPos - 1].icon,
                 visible: false,
                 found: false
             }
@@ -122,6 +124,7 @@ export const Board = ({
                     position: d.position,
                     key: d.key,
                     num: d.num,
+                    icon: d.icon,
                     visible: false,
                     found: d.found
                 })
@@ -187,6 +190,8 @@ export const Board = ({
             <GridContainer gridSize={gridSize} width={width}>
                 {gridArr.map(d => ( 
                     <Icon 
+                        iconView={theme === "icons"}
+                        icon={d.icon}
                         key={d.key} 
                         id={d.key}
                         found={d.found} 
@@ -310,7 +315,14 @@ const IconStyled = styled.div`
         cursor: pointer;
     }
 `
-const Icon = ({id, number, visible, found, handleGuess}) => {
+
+const StyledIcon = styled.div`
+    display: flex;
+    font-size: 2.5rem;
+    
+
+`
+const Icon = ({id, number, visible, found, handleGuess, icon, iconView}) => {
 
     return (
         <IconStyled 
@@ -318,7 +330,7 @@ const Icon = ({id, number, visible, found, handleGuess}) => {
             onClick={() => handleGuess(id, number)}
             visible={visible}
         >
-            {number}
+            {iconView ? <StyledIcon>{icon}</StyledIcon> :number}
         </IconStyled>   
     )
 }
