@@ -6,6 +6,8 @@ const Orientation = () => {
 
         window.addEventListener('orientationchange', handleOrientationChange)
     }, [])
+
+    return null
 }
 
 export default Orientation
