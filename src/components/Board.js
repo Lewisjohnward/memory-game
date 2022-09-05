@@ -496,14 +496,14 @@ const Component = ({playersState, setInitGame}) => {
             <Container>
                 <Title>Player {winner} has won!</Title>
                 {
-                    playersState.map(d => (
+                    sorted.map((d, i) => (
                         <ScoreContainer>
-                                <CrownIco />
+                            {i === 0 && <CrownIco />}
                             <PlayerScore>
                                 Player : {d.player}
                             </PlayerScore>
                             <PlayerScore>
-                                <BoldScore>{d.score}</BoldScore>
+                                <BoldScore>{d.score} pairs</BoldScore>
                             </PlayerScore>
                         </ScoreContainer>
                     ))}
