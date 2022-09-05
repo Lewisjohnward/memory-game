@@ -16,14 +16,16 @@ Welcome 👋! This is my solution to the [Memory Game challenge on Frontend Ment
 ### Screenshot
 
 ###TODO
-- [ ] Prevent clicking on tile more than once
-- [ ] Prevent clicking during uncover animation
-- [ ] End game logic
-- [ ] Implement scoring
-- [ ] Implement variable number of players
-- [ ] Icon mode
+- [x] Prevent clicking on tile more than once
+- [x] Prevent clicking during uncover animation
+- [x] End game logic
+- [x] Implement scoring
+- [x] Implement variable number of players
+- [x] Icon mode
+- [x] Newgame confirm
+- [ ] Player tie
+- [ ] Orientation issue
 - [ ] HOC portal
-- [ ] Newgame confirm
 
 
 ## My process
