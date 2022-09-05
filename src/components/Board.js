@@ -3,10 +3,7 @@ import {useState, useEffect} from "react"
 import styled from "styled-components"
 import {v4 as uuidv4} from "uuid"
 import ReactDOM from "react-dom"
-import {BiAnchor} from "react-icons/bi"
-import {IoFlaskSharp, IoMdCash, IoMdPaw, IoMdTrophy, IoMdRocket, IoMdGift, IoIosHappy} from "react-icons/io"
-import {FaHandPeace} from "react-icons/fa"
-import {FaDelicious, FaCanadianMapleLeaf, FaCarSide, FaDiceTwo, FaHorseHead, FaLemon, FaMask, FaPastafarianism} from "react-icons/fa"
+import {iconArr} from "../styles/Icons.styled.js"
 
 
 const GridContainer = styled.div`
@@ -51,24 +48,6 @@ export const Board = ({
     const min = 1
     const max = 99
     const randomNum = () => Math.floor(Math.random() * (max - min + 1) + min)
-    const iconArr = [
-        <BiAnchor />,
-        <FaHandPeace />,
-        <IoMdCash />,
-        <IoMdPaw />,
-        <IoMdTrophy />,
-        <IoMdRocket />,
-        <IoMdGift />,
-        <IoIosHappy />,
-        <FaDelicious />,
-        <FaCanadianMapleLeaf />,
-        <FaCarSide />,
-        <FaDiceTwo />,
-        <FaHorseHead />,
-        <FaLemon />,
-        <FaMask />,
-        <FaPastafarianism />
-    ]
     const numArr = new Array(tiles / 2).fill(0).map((d, i) => ({num: randomNum(), icon: iconArr[i]}))
 
     let randomNumPos = 0
