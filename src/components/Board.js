@@ -95,11 +95,10 @@ export const Board = ({
 
         }
         else setTimeout(() => hideGuesses(), 700)
-
         setGuess([])
-
     }
 
+    //Hides guessed
     const hideGuesses = () => {
         const temp = gridArr.map(d => {
             if(!d.found) {
@@ -194,6 +193,8 @@ export const Board = ({
 const PlayerContainer = styled.div`
     display: flex;
     justify-content: space-around;
+    width: 80%;
+    margin: 0 auto;
 `
 
 const PlayerDiv = styled.div`
