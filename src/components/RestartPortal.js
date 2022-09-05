@@ -86,7 +86,9 @@ const Component = ({setConfirmRestart, setInitGame}) => {
     return (
         <Wrapper>
             <Container>
-                <Title>Are you sure you want to restart?</Title>
+                <Title>
+                    Are you sure you want to restart?
+                </Title>
                 <Flex>
                     <RestartButton onClick={() => handleRestart()}>Restart</RestartButton>
                     <Button onClick={() => setConfirmRestart(false)}>Cancel</Button>

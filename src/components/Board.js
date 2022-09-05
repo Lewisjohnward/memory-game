@@ -235,15 +235,14 @@ const PlayerDiv = styled.div`
     background: ${({theme, currentPlayer}) => currentPlayer ? theme.orange : theme.lightgray};
     border-radius: 2px;
     color: ${({theme, currentPlayer}) => currentPlayer ? "white" : theme.navy};
+    z-index: -1;
     padding: 10px 20px;
-    margin: 0px 10px;
 
     @media (min-width: 650px){
         width: 200px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 20px;
     }
 `
 const Bold = styled.div`
@@ -258,7 +257,6 @@ const Score = styled.div`
 const PointerDiv = styled(PlayerContainer)`
     position: absolute;
     background: inherit;
-    z-index: -1;
     transform: rotate(45deg);
     height: 20px;
     width: 20px;
@@ -269,6 +267,23 @@ const PointerDiv = styled(PlayerContainer)`
     transform: translate(-50%, -50%) rotate(45deg);
 `
 
+const CurrentPlayerDiv = styled.div`
+    color: ${({theme, currentPlayer}) => currentPlayer ? theme.navy : "transparent"};
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+    letter-spacing: 6px;
+
+    @media (max-width: 650px)
+    {
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        margin-top: 5px;
+    }
+`
+
+const TurnDiv = styled.div`
+`
 
 
 
@@ -278,10 +293,6 @@ const Player = ({playersState, currentPlayer, time, moveCount}) => {
     useEffect(() => {
         window.innerWidth < 451 && setMobile(true)
     }, [])
-
-    useEffect(() => {
-        console.log(mobile)
-    }, [mobile])
 
     if(!playersState) return
 
@@ -301,7 +312,7 @@ const Multiplayer = ({playersState, currentPlayer, mobile}) => {
     return (
         <>
             {playersState.map(d => (
-                <>
+                <TurnDiv>
                     <PlayerDiv
                         key={d.id}
                         currentPlayer={d.player === currentPlayer}
@@ -310,7 +321,13 @@ const Multiplayer = ({playersState, currentPlayer, mobile}) => {
                         <Bold>{mobile ? "P" : "Player"} {d.player}</Bold>
                         <Score>{d.score}</Score>
                     </PlayerDiv>
-                    </>
+                    <CurrentPlayerDiv
+                        currentPlayer={d.player === currentPlayer}
+
+                    >
+                        Current turn
+                    </CurrentPlayerDiv>
+                </TurnDiv>
             ))}
         </>
     )

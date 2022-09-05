@@ -19,9 +19,12 @@ const Title = styled.h1`
 
 export const Header = ({setInitGame}) => {
     const [confirmRestart, setConfirmRestart] = useState(false)
+    const [confirmNewGame, setConfirmNewGame] = useState(false)
     return (
         <>
             <RestartPortal 
+                confirmNewGame={confirmNewGame}
+                setConfirmNewGame={setConfirmNewGame}
                 confirmRestart={confirmRestart}
                 setConfirmRestart={setConfirmRestart}
                 setInitGame={setInitGame}
@@ -30,7 +33,7 @@ export const Header = ({setInitGame}) => {
                 <Title>memory</Title>
                     <OptionContainer>
                     <RestartButton onClick={() => setConfirmRestart(true)}>Restart</RestartButton>
-                    <NewGameButton onClick={() => setInitGame(true)}>New Game</NewGameButton>
+                    <NewGameButton onClick={() => setConfirmNewGame(true)}>New Game</NewGameButton>
                     </OptionContainer>
         </Container>
         </>
