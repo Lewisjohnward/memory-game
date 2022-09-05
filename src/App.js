@@ -9,7 +9,7 @@ const theme = {
     background: "#f5f1d5",
     navy : "#001f3f",
     orange: "#FF851B",
-    lightgray: "#a8a8a5",
+    lightgray: "#dcdedc",
     silver: "#d8dae6"
 }
 
@@ -28,22 +28,6 @@ const device = {
 const StyledApp = styled.div`
     width: 100vw;
     height: ${({height}) => height}px;
-
-    //@media (min-width: 1px) {
-    //    background: #FFDC00;
-    //}
-
-    ////tablet
-    //@media (min-width: 320px){
-    //    background: #FF4136;
-    //    font-size: 1rem;
-    //}
-
-    //@media (min-width: 768px){
-    //    background: #01FF70;
-    //    font-size: 3rem;
-    //}
-
 `
 
 const App = () => {
