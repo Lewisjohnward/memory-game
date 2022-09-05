@@ -2,7 +2,9 @@ import {NewGameButton, RestartButton} from "../styles/Buttons.styled"
 import {useState, useEffect} from "react"
 import styled from "styled-components"
 import ReactDOM from "react-dom"
+
 import {generateGrid, initPlayers} from "../utils/inits.js"
+import {FaCrown} from "react-icons/fa"
 
 
 const GridContainer = styled.div`
@@ -387,17 +389,6 @@ const Icon = ({id, number, visible, found, handleGuess, icon, iconView, current}
     )
 }
 
-const modalPlaceholderElement = document.getElementById("modal-placeholder")
-
-
-export const EndGamePortal = ({endGame, playersState, setInitGame}) => {
-    if(endGame == false) return null
-    return ReactDOM.createPortal(
-        <Component playersState={playersState} setInitGame={setInitGame}/>
-        , modalPlaceholderElement
-    )
-}
-
 const Wrapper = styled.div`
     position: absolute;
     bottom: 0;
@@ -414,14 +405,15 @@ const Wrapper = styled.div`
 
 
 const Container = styled.div`
-    padding: 20px 35px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 300px;
 
     background: white;
     border-radius: 5px;
+    padding: 10px 15px;
 
     > * {
         margin-bottom: 15px;
@@ -453,10 +445,47 @@ const Button = styled.button`
 
 `
 
+const ScoreContainer = styled.div`
+    position: relative;
+    width: 100%;
+    padding: 15px 20px;
+    background: ${({theme}) => theme.silver};
+    color: ${({theme}) => theme.navy};
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+`
 
+const PlayerScore = styled.div``
+
+const BoldScore = styled.span`
+    font-weight: bold;
+`
+
+const CrownIco = styled(FaCrown)`
+    position: absolute;
+    top: -25px;
+    left: -8px;
+    color: gold;
+    font-size: 3rem;
+
+    transform: rotate(-10deg);
+`
+
+const modalPlaceholderElement = document.getElementById("modal-placeholder")
+
+
+export const EndGamePortal = ({endGame, playersState, setInitGame}) => {
+    if(endGame == false) return null
+    return ReactDOM.createPortal(
+        <Component playersState={playersState} setInitGame={setInitGame}/>
+        , modalPlaceholderElement
+    )
+}
 
 
 const Component = ({playersState, setInitGame}) => {
+    if (!playersState) return null
 
     const sorted = [...playersState].sort((a, b) => a.score > b.score) 
     const winner = sorted[0].player
@@ -466,6 +495,18 @@ const Component = ({playersState, setInitGame}) => {
         <Wrapper>
             <Container>
                 <Title>Player {winner} has won!</Title>
+                {
+                    playersState.map(d => (
+                        <ScoreContainer>
+                                <CrownIco />
+                            <PlayerScore>
+                                Player : {d.player}
+                            </PlayerScore>
+                            <PlayerScore>
+                                <BoldScore>{d.score}</BoldScore>
+                            </PlayerScore>
+                        </ScoreContainer>
+                    ))}
                 <Flex>
                     <RestartButton>Restart</RestartButton>
                     <NewGameButton onClick={() => setInitGame(true)}>New Game</NewGameButton>
