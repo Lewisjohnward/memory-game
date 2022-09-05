@@ -1,9 +1,8 @@
 import {NewGameButton, RestartButton} from "../styles/Buttons.styled"
 import {useState, useEffect} from "react"
 import styled from "styled-components"
-import {v4 as uuidv4} from "uuid"
 import ReactDOM from "react-dom"
-import {iconArr} from "../styles/Icons.styled.js"
+import {generateGrid, initPlayers} from "../utils/inits.js"
 
 
 const GridContainer = styled.div`
@@ -51,38 +50,16 @@ export const Board = ({
     //Prevents double clicking
     const [enableGuess, setEnableGuess] = useState(true)
 
-    const tiles = gridSize * gridSize
-    const uniqueNums = tiles / 2
-
-    const min = 1
-    const max = 99
-    const randomNum = () => Math.floor(Math.random() * (max - min + 1) + min)
-    const numArr = new Array(tiles / 2).fill(0).map((d, i) => ({num: randomNum(), icon: iconArr[i]}))
-
-    let randomNumPos = 0
-    const arr = new Array(tiles).fill(0).map((d, i) => {
-        if(randomNumPos > (numArr.length - 1)) randomNumPos = 0
-        randomNumPos++
-        return (
-            {
-                position: i,
-                key: uuidv4(),
-                num: numArr[randomNumPos - 1].num,
-                icon: numArr[randomNumPos - 1].icon,
-                current: false,
-                visible: false,
-                found: false
-            }
-        )
-    })
-
-    const width = gridSize * iconSize
+    //Initialises game
     useEffect(() => {
+        const arr = generateGrid(iconSize ,gridSize)
+        const playersArr = initPlayers(players)
         setGridArr(arr)
-        const playersArr = new Array(players).fill(0).map((d, i) => ({id: uuidv4(), player: i + 1, score: 0}))
         setPlayersState(playersArr)
     }, [])
 
+
+    //fires when user clicks on icons
     const handleGuess = (id, number) => {
         //Prevents rapid clicking
         if(enableGuess == false) return
@@ -96,6 +73,7 @@ export const Board = ({
         setGuess(prev => [...prev, guessObj])
     }
 
+    //Fires when user clicks on icons - compares guesses
     const compareGuesses = () => {
         if(guess[0].number === guess[1].number)
         {
@@ -194,7 +172,7 @@ export const Board = ({
     return (
         <>
             <EndGamePortal setInitGame={setInitGame} endGame={endGame} playersState={playersState}/>
-            <GridContainer gridSize={gridSize} width={width}>
+            <GridContainer gridSize={gridSize}>
                 {gridArr.map(d => ( 
                     <Icon 
                         iconView={theme === "icons"}
@@ -300,9 +278,8 @@ const Multiplayer = ({playersState, currentPlayer, mobile}) => {
     return (
         <>
             {playersState.map(d => (
-                <TurnDiv>
+                <TurnDiv key={d.id} >
                     <PlayerDiv
-                        key={d.id}
                         currentPlayer={d.player === currentPlayer}
                     >
                         <PointerDiv />
