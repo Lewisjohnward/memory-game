@@ -29,17 +29,26 @@ export const Board = ({
     setInitGame,
     setConfirmRestart
 }) => {
+    //Contains the game grid
     const [gridArr, setGridArr] = useState([])
 
+    //Contains the user guessed
     const [guess, setGuess] = useState([])
 
+    //Current player
     const [currentPlayer, setCurrentPlayer] = useState(1)
+
+    //Tracks players score
     const [playersState, setPlayersState] = useState()
 
+    //When endgame true modal for reset game
     const [endGame, setEndGame] = useState(false)
 
+    //Single player state
     const [time, setTime] = useState(0)
     const [moveCount, setMoveCount] = useState(0)
+
+    //Prevents double clicking
     const [enableGuess, setEnableGuess] = useState(true)
 
     const tiles = gridSize * gridSize
