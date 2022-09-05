@@ -28,7 +28,12 @@ export const View = () => {
     const [players, setPlayers] = useState(2)
     const [gridSize, setGridSize] = useState(4)
 
+    const [restartGame, setRestartGame] = useState(false)
 
+
+    const handleRestartGame = () => {
+        setRestartGame(true)
+    }
 
 
 
@@ -56,8 +61,12 @@ export const View = () => {
             <Padding>
                 <Header 
                     setInitGame={setInitGame}
+                    handleRestartGame={handleRestartGame}
                 />
                 <Board
+                    restartGame={restartGame}
+                    setRestartGame={setRestartGame}
+
                     setInitGame={setInitGame}
                     theme={theme}
                     players={players}

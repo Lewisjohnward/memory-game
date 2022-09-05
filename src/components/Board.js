@@ -26,7 +26,9 @@ export const Board = ({
     players,
     gridSize,
     setInitGame,
-    setConfirmRestart
+    setConfirmRestart,
+    restartGame,
+    setRestartGame
 }) => {
     //Contains the game grid
     const [gridArr, setGridArr] = useState([])
@@ -56,8 +58,14 @@ export const Board = ({
         const playersArr = initPlayers(players)
         setGridArr(arr)
         setPlayersState(playersArr)
-    }, [])
 
+        if(restartGame) handleRestartGame()
+    }, [restartGame])
+
+    const handleRestartGame = () => {
+        setCurrentPlayer(1)
+        setRestartGame(false)
+    }
 
     //fires when user clicks on icons
     const handleGuess = (id, number) => {

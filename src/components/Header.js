@@ -17,12 +17,13 @@ const Title = styled.h1`
     font-size: 2rem;
 `
 
-export const Header = ({setInitGame}) => {
+export const Header = ({setInitGame, handleRestartGame}) => {
     const [confirmRestart, setConfirmRestart] = useState(false)
     const [confirmNewGame, setConfirmNewGame] = useState(false)
     return (
         <>
             <RestartPortal 
+                handleRestartGame={handleRestartGame}
                 confirmNewGame={confirmNewGame}
                 setConfirmNewGame={setConfirmNewGame}
                 confirmRestart={confirmRestart}

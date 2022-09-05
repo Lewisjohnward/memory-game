@@ -4,18 +4,6 @@ import ReactDOM from "react-dom"
 
 const modalPlaceholderElement = document.getElementById("modal-placeholder")
 
-
-export const RestartPortal = ({confirmRestart, setConfirmRestart, setInitGame}) => {
-    if(confirmRestart == false) return null
-    return ReactDOM.createPortal(
-        <Component 
-            setConfirmRestart={setConfirmRestart}
-            setInitGame={setInitGame}
-        />
-        , modalPlaceholderElement
-    )
-}
-
 const Wrapper = styled.div`
     position: absolute;
     bottom: 0;
@@ -76,22 +64,48 @@ const RestartButton = styled(Button)`
     color: white;
 `
 
-const Component = ({setConfirmRestart, setInitGame}) => {
+
+
+export const RestartPortal = ({handleRestartGame, setConfirmNewGame, confirmNewGame, confirmRestart, setConfirmRestart, setInitGame}) => {
+    if(confirmRestart === false && confirmNewGame === false) return null
+
+    return ReactDOM.createPortal(
+        <Component 
+            handleRestartGame={handleRestartGame}
+            setConfirmRestart={setConfirmRestart}
+            setConfirmNewGame={setConfirmNewGame}
+            confirmNewGame={confirmNewGame}
+            setInitGame={setInitGame}
+        />
+        , modalPlaceholderElement
+    )
+}
+
+const Component = ({handleRestartGame, setConfirmNewGame, confirmNewGame, setConfirmRestart, setInitGame}) => {
 
     const handleRestart = () => {
+        setConfirmNewGame(false)
         setConfirmRestart(false)
-        setInitGame(true)
+        if(confirmNewGame) setInitGame(true)
+        else handleRestartGame()
+
+    }
+
+
+    const handleCancel = () => {
+        setConfirmNewGame(false)
+        setConfirmRestart(false)
     }
 
     return (
         <Wrapper>
             <Container>
                 <Title>
-                    Are you sure you want to restart?
+                    Are you sure you want to {confirmNewGame ? "start a new game" : "restart"}?
                 </Title>
                 <Flex>
-                    <RestartButton onClick={() => handleRestart()}>Restart</RestartButton>
-                    <Button onClick={() => setConfirmRestart(false)}>Cancel</Button>
+                    <RestartButton onClick={() => handleRestart()}>{ confirmNewGame ? "new game" : "restart" }</RestartButton>
+                    <Button onClick={() => handleCancel()}>Cancel</Button>
                 </Flex>
             </Container>
         </Wrapper>
