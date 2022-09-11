@@ -2,25 +2,39 @@ import {iconArr} from "../styles/Icons.styled.js"
 import {v4 as uuidv4} from "uuid"
 
 export const generateGrid = (iconSize, gridSize) => {
-    console.log("its me")
     const tiles = gridSize * gridSize
     const uniqueNums = tiles / 2
 
     const min = 1
     const max = 99
     const randomNum = () => Math.floor(Math.random() * (max - min + 1) + min)
-    const numArr = new Array(tiles / 2).fill(0).map((d, i) => ({num: randomNum(), icon: iconArr[i]}))
+    const numArr = new Array(uniqueNums).fill(0).map((d, i) => ({num: randomNum(), icon: iconArr[i]}))
+    const duplicateArr = numArr.concat(numArr)
+
+    const shuffle = (array) => {
+        let m = array.length, t, i
+
+        while(m){
+            i = Math.floor(Math.random() * m--)
+
+            t = array[m]
+            array[m] = array[i]
+            array[i] = t
+        }
+        return array
+    }
+
+    const shuffledArr = shuffle(duplicateArr)
+
 
     let randomNumPos = 0
     const arr = new Array(tiles).fill(0).map((d, i) => {
-        if(randomNumPos > (numArr.length - 1)) randomNumPos = 0
-        randomNumPos++
         return (
             {
                 position: i,
                 key: uuidv4(),
-                num: numArr[randomNumPos - 1].num,
-                icon: numArr[randomNumPos - 1].icon,
+                num: shuffledArr[i].num,
+                icon: shuffledArr[i].icon,
                 current: false,
                 visible: false,
                 found: false
