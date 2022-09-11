@@ -41,6 +41,9 @@ export const Board = ({
     //Current player
     const [currentPlayer, setCurrentPlayer] = useState(1)
 
+    //Timer for single player
+    const [timerActive, setTimerActive] = useState(false)
+
     //Tracks players score
     const [playersState, setPlayersState] = useState()
 
@@ -172,10 +175,20 @@ export const Board = ({
 
     const incrementTime = () => setTime(prev => prev + 1)
 
+
     useEffect(() => {
-        if(playersState?.length != 1) return
-        setTimeout(incrementTime, 1000)
-    }, [time, playersState])
+        if (timerActive) setTimeout(incrementTime, 1000)
+    }, [time, timerActive])
+
+    useEffect(() => {
+        if(!playersState) return
+        if(playersState.length == 1) setTimerActive(true)
+
+    }, [playersState])
+
+    useEffect(() => {
+        if(endGame) setTimerActive(false)
+    }, [endGame])
 
 
     return (

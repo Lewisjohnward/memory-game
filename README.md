@@ -25,7 +25,8 @@ Welcome 👋! This is my solution to the [Memory Game challenge on Frontend Ment
 - [x] Newgame confirm
 - [ ] Player tie
 - [ ] Single player end screen
-- [ ] Issue with single player timer 
+- [x] Issue with single player timer 
+- [ ] Ensure that no duplicate numbers
 - [ ] Orientation issue
 - [ ] HOC portal
 
