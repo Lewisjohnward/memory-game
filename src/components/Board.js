@@ -180,7 +180,7 @@ export const Board = ({
 
     return (
         <>
-            <EndGamePortal setInitGame={setInitGame} endGame={endGame} playersState={playersState}/>
+            <EndGamePortal setInitGame={setInitGame} time={time} endGame={endGame} playersState={playersState}/>
             <GridContainer gridSize={gridSize}>
                 {gridArr.map(d => ( 
                     <Icon 
@@ -416,7 +416,7 @@ const Container = styled.div`
     padding: 10px 15px;
 
     > * {
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
 `
 const Title = styled.h1`
@@ -490,11 +490,16 @@ const Component = ({playersState, setInitGame}) => {
     const sorted = [...playersState].sort((a, b) => a.score > b.score) 
     const winner = sorted[0].player
 
+    const finishMessage = playersState.length === 1 ?
+        "Congratulations! You found them all!" 
+        :
+        `Player ${winner} has won`
+
 
     return (
         <Wrapper>
             <Container>
-                <Title>Player {winner} has won!</Title>
+                <Title>{finishMessage}</Title>
                 {
                     sorted.map((d, i) => (
                         <ScoreContainer>
