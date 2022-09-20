@@ -545,7 +545,6 @@ const Component = ({playersState, setInitGame}) => {
                         </ScoreContainer>
                     ))}
                 <Flex>
-                    <RestartButton>Restart</RestartButton>
                     <NewGameButton onClick={() => setInitGame(true)}>New Game</NewGameButton>
                 </Flex>
             </Container>

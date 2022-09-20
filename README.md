@@ -23,9 +23,10 @@ Welcome 👋! This is my solution to the [Memory Game challenge on Frontend Ment
 - [x] Implement variable number of players
 - [x] Icon mode
 - [x] Newgame confirm
+- [x] Issue with single player timer 
+- [ ] Duplicate numbers?
 - [ ] Player tie
 - [ ] Single player end screen
-- [x] Issue with single player timer 
 - [ ] Ensure that no duplicate numbers
 - [ ] Orientation issue
 - [ ] HOC portal
