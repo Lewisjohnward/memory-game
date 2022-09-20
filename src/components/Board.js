@@ -422,19 +422,32 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 300px;
 
     background: white;
     border-radius: 5px;
-    padding: 10px 15px;
+    padding: 15px 30px;
 
     > * {
         margin-bottom: 20px;
     }
 `
-const Title = styled.h1`
+
+const EndGameMessageContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
+const FinishMessageStyled = styled.h1`
     color: ${({theme}) => theme.navy};
-    font-size: 1em;
+    font-size: 2em;
+`
+
+const GameOverMessage = styled.p`
+    font-size: 0.8em;
+    color: ${({theme}) => theme.navy};
+    opacity: 0.8;
+    font-weight: bold;
 `
 
 
@@ -485,6 +498,7 @@ const CrownIco = styled(FaCrown)`
     transform: rotate(-10deg);
 `
 
+
 const modalPlaceholderElement = document.getElementById("modal-placeholder")
 
 
@@ -506,13 +520,18 @@ const Component = ({playersState, setInitGame}) => {
     const finishMessage = playersState.length === 1 ?
         "Congratulations! You found them all!" 
         :
-        `Player ${winner} has won`
+        `Player ${winner} wins!`
 
 
     return (
         <Wrapper>
             <Container>
-                <Title>{finishMessage}</Title>
+                <EndGameMessageContainer>
+                    <FinishMessageStyled>{finishMessage}</FinishMessageStyled>
+                    <GameOverMessage>
+                        Game over! Here are the results...
+                    </GameOverMessage>
+                </EndGameMessageContainer>
                 {
                     sorted.map((d, i) => (
                         <ScoreContainer>
